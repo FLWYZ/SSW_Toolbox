@@ -41,16 +41,6 @@ class SSWLabel: UILabel {
             return nil
         }
         let optimizedAttributedText = self.attributedText?.mutableCopy()
-        self.attributedText?.enumerateAttributesInRange(NSMakeRange(0, self.attributedText!.length), options: NSAttributedStringEnumerationOptions.Reverse, usingBlock: { [unowned self] (attrs, range, stop) -> Void in
-            if attrs[kCTFontAttributeName as String] == nil{
-                optimizedAttributedText?.addAttribute(kCTFontAttributeName as String, value: self.font, range: NSMakeRange(0, self.attributedText!.length))
-            }
-            if attrs[kCTParagraphStyleAttributeName as String] == nil{
-                let paragraphStyle = NSMutableParagraphStyle()
-                paragraphStyle.lineBreakMode = self.lineBreakMode
-                optimizedAttributedText?.addAttribute(kCTParagraphStyleAttributeName as String, value: paragraphStyle, range: NSMakeRange(0, self.attributedText!.length))
-            }
-        })
         
         optimizedAttributedText?.enumerateAttribute(kCTParagraphStyleAttributeName as String, inRange: NSMakeRange(0, (optimizedAttributedText?.length)!), options: NSAttributedStringEnumerationOptions.Reverse, usingBlock: { (value, range, stop) -> Void in
             let paragraphStyle:NSMutableParagraphStyle = value!.mutableCopy() as! NSMutableParagraphStyle

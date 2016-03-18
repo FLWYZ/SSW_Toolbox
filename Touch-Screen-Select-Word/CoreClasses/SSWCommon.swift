@@ -41,6 +41,31 @@ import UIKit
     optional func SSWCurrentSelectedLineDescent_iOSCoordinate(descent_iOS:CGFloat)->Void
 }
 
+@objc protocol SSWCommonProtocol_TextView{
+    
+    optional func SSW_TextView_SelectString(string:String?)->Void
+    
+    optional func SSW_TextView_SelectLine(line:String?)->Void
+    
+    optional func SSW_TextView_SelectRect_Line(line_TextView lineRect:NSValue, line_Window lineRect_2:NSValue)->Void
+    
+    optional func SSW_TextView_SelectRect_Word(word_TextView wordRect:NSValue, word_Window wordRect_2:NSValue)->Void
+    
+    optional func SSW_TextView_SelectRect(line_TextView lineRect:NSValue, word_TextView wordRect:NSValue, line_Window lineRect_2:NSValue, word_Window wordRect_2:NSValue)->Void
+    
+    optional func SSW_TextView_SelectCenter(word_TextView wordCenter:NSValue,word_Window wordCenter_2:NSValue)->Void
+    
+    optional func SSW_TextView_SelectString(string:String? ,line:String? ,line_Window lineRect:NSValue ,word_Window wordRect:NSValue ,word_TextView wordCenter:NSValue ,word_Window wordCenter_2:NSValue)->Void
+}
+
+extension CGRect{
+    var center:CGPoint{
+        get{
+            return CGPointMake(CGRectGetMidX(self), CGRectGetMinY(self))
+        }
+    }
+}
+
 func touchPoint(touches:Set<UITouch>?,baseView:UIView) -> CGPoint{
     if touches != nil{
         let touch = (touches! as NSSet).allObjects.last as! UITouch;
