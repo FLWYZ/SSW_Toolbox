@@ -65,7 +65,11 @@ import UIKit
 extension CGRect{
     var center:CGPoint{
         get{
-            return CGPointMake(CGRectGetMidX(self), CGRectGetMinY(self))
+            
+            print(self)
+            print(CGPointMake(CGRectGetMidX(self), CGRectGetMidY(self)))
+            
+            return CGPointMake(CGRectGetMidX(self), CGRectGetMidY(self))
         }
     }
 }

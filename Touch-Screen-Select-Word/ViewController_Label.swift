@@ -20,9 +20,9 @@ class ViewController_Label: UIViewController,SSWCommonProtocol_Label {
         let attributeString = NSMutableAttributedString(string: baseString)
         let paragraphstyle = NSMutableParagraphStyle()
         paragraphstyle.lineSpacing = 5
-        paragraphstyle.lineBreakMode = NSLineBreakMode.ByCharWrapping
+        paragraphstyle.lineBreakMode = NSLineBreakMode.ByWordWrapping
         paragraphstyle.alignment = NSTextAlignment.Right
-        attributeString.setAttributes([NSFontAttributeName:UIFont.systemFontOfSize(17),
+        attributeString.setAttributes([NSFontAttributeName:UIFont.systemFontOfSize(15),
             NSForegroundColorAttributeName:UIColor.blackColor(),
             NSParagraphStyleAttributeName:paragraphstyle
             ], range: NSMakeRange(0, baseString.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)))
@@ -53,6 +53,12 @@ class ViewController_Label: UIViewController,SSWCommonProtocol_Label {
 //        print("CTLine select litter index \(litterIndex)")
     }
     func SSWCurrentSelectWordTopCenter(topCenter: NSValue, BottomCenter bottomCenter: NSValue) {
+        
+        let temperaryView:UIView = UIView.init(frame: CGRectMake(0, 0, 30, 30))
+        temperaryView.backgroundColor = UIColor.redColor()
+        temperaryView.center = CGPointMake(topCenter.CGPointValue().x, topCenter.CGPointValue().y - 15)
+        self.view.addSubview(temperaryView)
+        
         print("topcenter == \(topCenter) bottomcenter == \(bottomCenter)")
     }
 }

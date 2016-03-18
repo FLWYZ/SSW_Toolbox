@@ -60,7 +60,9 @@ class SSWLabel: UILabel {
         
         let framesetter = CTFramesetterCreateWithAttributedString(optimizedAttributedText as! CFAttributedStringRef)
         let path = CGPathCreateMutable()
-        CGPathAddRect(path, nil, textRect)
+        var rectForCal = textRect
+        rectForCal.size.height = 2000
+        CGPathAddRect(path, nil, rectForCal)
         
         let frame:CTFrameRef = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, self.attributedText!.length), path, nil)
                 
@@ -78,8 +80,17 @@ class SSWLabel: UILabel {
         var lineOrigins = [CGPoint](count: numberOfLines, repeatedValue: CGPointZero)
         CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), &lineOrigins)
 
+        //get the last line
+        let lastLine:CTLineRef = unsafeBitCast(CFArrayGetValueAtIndex(lines, numberOfLines - 1), CTLineRef.self)
+        var lastLineDescent:CGFloat = 0.0
+        CTLineGetTypographicBounds(lastLine,nil,&lastLineDescent,nil)
+        
+        let heightRate = floor(lineOrigins[numberOfLines - 1].y + floor(lastLineDescent))
+        print(floor(lastLineDescent))
+        
         for lineIndex:CFIndex in 0..<numberOfLines{
-            let lineOrigin = lineOrigins[lineIndex]
+            var lineOrigin = lineOrigins[lineIndex]
+            lineOrigin.y -= heightRate
             
             let line:CTLineRef = unsafeBitCast(CFArrayGetValueAtIndex(lines, lineIndex), CTLineRef.self)
             
@@ -94,13 +105,18 @@ class SSWLabel: UILabel {
             if point.y > yMax{
                 break
             }
+            
             if point.y >= yMin{
                 if point.x >= lineOrigin.x && point.x <= (lineOrigin.x + CGFloat(width)){
                     let relativePoint = CGPointMake(point.x - lineOrigin.x, point.y - lineOrigin.y)
                     idx = CTLineGetStringIndexForPosition(line, relativePoint)
                     idxInLine = line
                     idxLineHeight = yMax - yMin
+                    
+                    idxLineHeight = textRect.size.height - yMax
+                    
                     idxLineOriginPoint = CGPointMake(lineOrigin.x, textRect.size.height - yMax + textRect.origin.y)
+                    
                     self.delegate?.SSWCurrentSelectLineAscent_CTCoordinate?(yMax)
                     self.delegate?.SSWCurrentSelectLineDescent_CTCoordinate?(yMin)
                     self.delegate?.SSWCurrentSelectLineAscent_iOSCoordinate?(max(textRect.height - yMax, 0))
@@ -109,8 +125,10 @@ class SSWLabel: UILabel {
                 }
             }
         }
-        
-        return (idx,idxInLine,idxLineHeight,idxLineOriginPoint)
+        guard idx != NSNotFound else {
+            return nil
+        }
+        return (idx,idxInLine,idxLineHeight,idxLineOriginPoint) 
     }
     
     func string_stringRectAtPoint(point:CGPoint) -> (String,CGRect)?{
@@ -134,7 +152,7 @@ class SSWLabel: UILabel {
             endRange.location = stringLength
         }
         
-        let startOffset = CTLineGetOffsetForStringIndex(cfLine, frontRange.location , nil)
+        let startOffset = CTLineGetOffsetForStringIndex(cfLine, frontRange.location + 1 , nil)
         let endOffset = CTLineGetOffsetForStringIndex(cfLine, endRange.location , nil)
         let stringRect = CGRectMake( CGRectGetMinX(self.frame) + cfLineOrigin.x + startOffset , CGRectGetMinY(self.frame) + cfLineOrigin.y , endOffset - startOffset, cfLineHeight)
         
@@ -188,7 +206,8 @@ class SSWLabel: UILabel {
             }
             if stringRect != nil{
                 delegate?.SSWCurrentSelectWordRect?(NSValue(CGRect: stringRect!), wordCenter: NSValue(CGPoint: stringRect!.center))
-                let topCenter = CGPointMake(stringRect!.center.x, CGRectGetMidY(stringRect!))
+                let topCenter = CGPointMake(stringRect!.center.x, CGRectGetMinY(stringRect!))
+                
                 let bottomCenter = CGPointMake(stringRect!.center.x, CGRectGetMaxY(stringRect!))
                 delegate?.SSWCurrentSelectWordTopCenter?(NSValue(CGPoint: topCenter), BottomCenter: NSValue(CGPoint: bottomCenter))
             }

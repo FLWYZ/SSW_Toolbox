@@ -96,9 +96,9 @@ class SSWTextView: UITextView {
     }
     
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        if self.touchFuncValidDelegate(touches, withEvent: event){
+//        if self.touchFuncValidDelegate(touches, withEvent: event){
             super.touchesCancelled(touches, withEvent: event)
-        }
+//        }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
