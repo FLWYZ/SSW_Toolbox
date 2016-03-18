@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FxZ-7t-fM3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -8,7 +8,7 @@
         <!--Item 2-->
         <scene sceneID="PSK-AZ-POv">
             <objects>
-                <viewController id="gGx-AR-ddd" sceneMemberID="viewController">
+                <viewController id="gGx-AR-ddd" customClass="ViewController_TextView" customModule="Touch_Screen_Select_Word" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5il-kJ-fBJ"/>
                         <viewControllerLayoutGuide type="bottom" id="ZIG-RD-Fc0"/>
@@ -27,7 +27,7 @@
         <!--Item 1-->
         <scene sceneID="B8l-uh-V63">
             <objects>
-                <viewController id="wIV-a3-0lM" customClass="ViewController" customModule="Touch_Screen_Select_Word" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="wIV-a3-0lM" customClass="ViewController_Label" customModule="Touch_Screen_Select_Word" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZYD-CZ-2pm"/>
                         <viewControllerLayoutGuide type="bottom" id="b61-bh-qgo"/>
@@ -35,9 +35,26 @@
                     <view key="view" contentMode="scaleToFill" id="LlL-rr-fZT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4OU-wT-hIa" customClass="SSWLabel" customModule="Touch_Screen_Select_Word" customModuleProvider="target">
+                                <rect key="frame" x="20" y="40" width="560" height="491"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4OU-wT-hIa" firstAttribute="leading" secondItem="LlL-rr-fZT" secondAttribute="leading" constant="20" id="BxY-MS-Qp0"/>
+                            <constraint firstItem="b61-bh-qgo" firstAttribute="top" secondItem="4OU-wT-hIa" secondAttribute="bottom" constant="20" id="JI8-Nc-Yon"/>
+                            <constraint firstAttribute="trailing" secondItem="4OU-wT-hIa" secondAttribute="trailing" constant="20" id="Zla-na-dAl"/>
+                            <constraint firstItem="4OU-wT-hIa" firstAttribute="top" secondItem="ZYD-CZ-2pm" secondAttribute="bottom" constant="20" id="mZ4-MU-y1U"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="o1p-ih-z3V"/>
+                    <connections>
+                        <outlet property="sswLabel" destination="4OU-wT-hIa" id="NcT-Dv-rDw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iyE-XW-lrX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
