@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FxZ-7t-fM3">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Item 2-->
+        <scene sceneID="PSK-AZ-POv">
+            <objects>
+                <viewController id="gGx-AR-ddd" customClass="ViewController_TextView" customModule="Touch_Screen_Select_Word" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5il-kJ-fBJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZIG-RD-Fc0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AsJ-yA-eAp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RD8-Qq-JqP" customClass="SSWTextView" customModule="Touch_Screen_Select_Word" customModuleProvider="target">
+                                <rect key="frame" x="20" y="40" width="560" height="491"/>
+                                <color key="backgroundColor" red="1" green="0.086274509799999996" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RD8-Qq-JqP" firstAttribute="leading" secondItem="AsJ-yA-eAp" secondAttribute="leading" constant="20" id="X2Z-0s-SZg"/>
+                            <constraint firstAttribute="trailing" secondItem="RD8-Qq-JqP" secondAttribute="trailing" constant="20" id="YNW-GJ-xWo"/>
+                            <constraint firstItem="RD8-Qq-JqP" firstAttribute="top" secondItem="5il-kJ-fBJ" secondAttribute="bottom" constant="20" id="k0P-O6-KSe"/>
+                            <constraint firstItem="ZIG-RD-Fc0" firstAttribute="top" secondItem="RD8-Qq-JqP" secondAttribute="bottom" constant="20" id="ybE-tl-FDw"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 2" id="vSf-Df-XN2"/>
+                    <connections>
+                        <outlet property="sswTextView" destination="RD8-Qq-JqP" id="4YK-GX-6Ys"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ovz-g2-0ZK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="435" y="1134"/>
+        </scene>
+        <!--Item 1-->
+        <scene sceneID="B8l-uh-V63">
+            <objects>
+                <viewController id="wIV-a3-0lM" customClass="ViewController_Label" customModule="Touch_Screen_Select_Word" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZYD-CZ-2pm"/>
+                        <viewControllerLayoutGuide type="bottom" id="b61-bh-qgo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LlL-rr-fZT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4OU-wT-hIa" customClass="SSWLabel" customModule="Touch_Screen_Select_Word" customModuleProvider="target">
+                                <rect key="frame" x="20" y="40" width="560" height="491"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4OU-wT-hIa" firstAttribute="leading" secondItem="LlL-rr-fZT" secondAttribute="leading" constant="20" id="BxY-MS-Qp0"/>
+                            <constraint firstItem="b61-bh-qgo" firstAttribute="top" secondItem="4OU-wT-hIa" secondAttribute="bottom" constant="20" id="JI8-Nc-Yon"/>
+                            <constraint firstAttribute="trailing" secondItem="4OU-wT-hIa" secondAttribute="trailing" constant="20" id="Zla-na-dAl"/>
+                            <constraint firstItem="4OU-wT-hIa" firstAttribute="top" secondItem="ZYD-CZ-2pm" secondAttribute="bottom" constant="20" id="mZ4-MU-y1U"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 1" id="o1p-ih-z3V"/>
+                    <connections>
+                        <outlet property="sswLabel" destination="4OU-wT-hIa" id="NcT-Dv-rDw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iyE-XW-lrX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="435" y="473"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="KEC-Dt-cgd">
+            <objects>
+                <tabBarController id="FxZ-7t-fM3" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="1C8-N7-IsH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="wIV-a3-0lM" kind="relationship" relationship="viewControllers" id="8vJ-nf-usK"/>
+                        <segue destination="gGx-AR-ddd" kind="relationship" relationship="viewControllers" id="wGF-GW-bbP"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lqv-h5-3ve" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-385" y="804"/>
+        </scene>
+    </scenes>
+</document>
