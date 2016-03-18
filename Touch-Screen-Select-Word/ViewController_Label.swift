@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController_Label: UIViewController,SSWCommonProtocol {
+class ViewController_Label: UIViewController,SSWCommonProtocol_Label {
     
     @IBOutlet weak var sswLabel: SSWLabel!
     
@@ -29,28 +29,30 @@ class ViewController_Label: UIViewController,SSWCommonProtocol {
         self.sswLabel.attributedText = attributeString
     }
     
-    func SSWCurrentSelectedLineAscent_CTCoordinate(ascent_CT: CGFloat) {
-        print("CTLine ascent in CT coordinat \(ascent_CT)")
+    func SSWCurrentSelectLineAscent_CTCoordinate(ascent_CT: CGFloat) {
+//        print("CTLine ascent in CT coordinat \(ascent_CT)")
     }
     
-    func SSWCurrentSelectedLineDescent_CTCoordinate(descent_CT: CGFloat) {
-        print("CTLine descent in CT coordinat \(descent_CT)")
+    func SSWCurrentSelectLineDescent_CTCoordinate(descent_CT: CGFloat) {
+//        print("CTLine descent in CT coordinat \(descent_CT)")
     }
     
-    func SSWCurrentSelectedLineAscent_iOSCoordinate(ascent_iOS: CGFloat) {
-        print("CTLine ascent in iOS coordinat \(ascent_iOS)")
+    func SSWCurrentSelectLineAscent_iOSCoordinate(ascent_iOS: CGFloat) {
+//        print("CTLine ascent in iOS coordinat \(ascent_iOS)")
     }
     
-    func SSWCurrentSelectedLineDescent_iOSCoordinate(descent_iOS: CGFloat) {
-        print("CTLine descent in iOS coordinat \(descent_iOS)")
+    func SSWCurrentSelectLineDescent_iOSCoordinate(descent_iOS: CGFloat) {
+//        print("CTLine descent in iOS coordinat \(descent_iOS)")
     }
     
-    func SSWCurrentSelectedString(string: String) {
-        print(string)
+    func SSWCurrentSelectString(string: String) {
+//        print(string)
     }
     
-    func SSWCurrentSelectedLitterIndex(litterIndex: CFIndex) {
-        print("CTLine select litter index \(litterIndex)")
+    func SSWCurrentSelectLitterIndex(litterIndex: CFIndex) {
+//        print("CTLine select litter index \(litterIndex)")
     }
-    
+    func SSWCurrentSelectWordTopCenter(topCenter: NSValue, BottomCenter bottomCenter: NSValue) {
+        print("topcenter == \(topCenter) bottomcenter == \(bottomCenter)")
+    }
 }

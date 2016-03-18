@@ -9,36 +9,40 @@
 import Foundation
 import UIKit
 
-@objc protocol SSWCommonProtocol{
+@objc protocol SSWCommonProtocol_Label{
     /**
      to get the select string by space
      */
-    optional func SSWCurrentSelectedString( string:String ) -> Void
+    optional func SSWCurrentSelectString( string:String ) -> Void
     
     /**
      to get the select litter index in the ctline
      */
-    optional func SSWCurrentSelectedLitterIndex( litterIndex:CFIndex ) -> Void
+    optional func SSWCurrentSelectLitterIndex( litterIndex:CFIndex ) -> Void
     
     /**
      to get the select ctline ascent in CT Coordinate (origin point is in bottom left)
      */
-    optional func SSWCurrentSelectedLineAscent_CTCoordinate(ascent_CT:CGFloat)->Void
+    optional func SSWCurrentSelectLineAscent_CTCoordinate(ascent_CT:CGFloat)->Void
     
     /**
      to get the select ctline descent in CT Coordinate (origin point is in bottom left)
      */
-    optional func SSWCurrentSelectedLineDescent_CTCoordinate(descent_CT:CGFloat)->Void
+    optional func SSWCurrentSelectLineDescent_CTCoordinate(descent_CT:CGFloat)->Void
     
     /**
      to get the select ctline ascent in iOS Coordinate (origin point is in top left)
      */
-    optional func SSWCurrentSelectedLineAscent_iOSCoordinate(ascent_iOS:CGFloat)->Void
+    optional func SSWCurrentSelectLineAscent_iOSCoordinate(ascent_iOS:CGFloat)->Void
     
     /**
      to get the select ctline descent in iOS Coordinate (origin point is in bottom left)
      */
-    optional func SSWCurrentSelectedLineDescent_iOSCoordinate(descent_iOS:CGFloat)->Void
+    optional func SSWCurrentSelectLineDescent_iOSCoordinate(descent_iOS:CGFloat)->Void
+    
+    optional func SSWCurrentSelectWordRect(wordRect:NSValue,wordCenter:NSValue)->Void
+    
+    optional func SSWCurrentSelectWordTopCenter(topCenter:NSValue,BottomCenter bottomCenter:NSValue)
 }
 
 @objc protocol SSWCommonProtocol_TextView{

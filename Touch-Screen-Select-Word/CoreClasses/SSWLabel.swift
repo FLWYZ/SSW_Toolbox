@@ -9,7 +9,7 @@
 import UIKit
 
 class SSWLabel: UILabel {
-    weak var delegate:SSWCommonProtocol?
+    weak var delegate:SSWCommonProtocol_Label?
     var textRect:CGRect{
         get{
             var rect = self.textRectForBounds(self.bounds, limitedToNumberOfLines: self.numberOfLines)
@@ -24,7 +24,7 @@ class SSWLabel: UILabel {
         }
     }
     
-    init(frame: CGRect,delegate:SSWCommonProtocol) {
+    init(frame: CGRect,delegate:SSWCommonProtocol_Label) {
         self.delegate = delegate
         super.init(frame: frame)
         self.userInteractionEnabled = true
@@ -35,7 +35,7 @@ class SSWLabel: UILabel {
         self.userInteractionEnabled = true
     }
     
-    func characterIndexAtPoint(var point:CGPoint) ->CFIndex?{
+    func characterIndexAtPoint(var point:CGPoint) -> (CFIndex,CTLineRef,CGFloat,CGPoint)?{
         
         guard CGRectContainsPoint(self.textRect, point) else{
             return nil
@@ -52,7 +52,7 @@ class SSWLabel: UILabel {
         })
         
         if CGRectContainsPoint(self.bounds, point) == false{
-            return NSNotFound;
+            return nil
         }
         
         point = CGPointMake(point.x - textRect.origin.x, point.y - textRect.origin.y)
@@ -68,13 +68,16 @@ class SSWLabel: UILabel {
         
         let numberOfLines = self.numberOfLines > 0 ? min(self.numberOfLines, CFArrayGetCount(lines)):CFArrayGetCount(lines)
         if numberOfLines == 0{
-            return NSNotFound
+            return nil
         }
         var idx = NSNotFound
+        var idxInLine:CTLineRef = unsafeBitCast(CFArrayGetValueAtIndex(lines, 0), CTLineRef.self)
+        var idxLineHeight:CGFloat = 0.0
+        var idxLineOriginPoint:CGPoint = CGPointMake(0, 0)
         
         var lineOrigins = [CGPoint](count: numberOfLines, repeatedValue: CGPointZero)
         CTFrameGetLineOrigins(frame, CFRangeMake(0, numberOfLines), &lineOrigins)
-        
+
         for lineIndex:CFIndex in 0..<numberOfLines{
             let lineOrigin = lineOrigins[lineIndex]
             
@@ -95,26 +98,28 @@ class SSWLabel: UILabel {
                 if point.x >= lineOrigin.x && point.x <= (lineOrigin.x + CGFloat(width)){
                     let relativePoint = CGPointMake(point.x - lineOrigin.x, point.y - lineOrigin.y)
                     idx = CTLineGetStringIndexForPosition(line, relativePoint)
-                    self.delegate?.SSWCurrentSelectedLineAscent_CTCoordinate?(yMax)
-                    self.delegate?.SSWCurrentSelectedLineDescent_CTCoordinate?(yMin)
-                    self.delegate?.SSWCurrentSelectedLineAscent_iOSCoordinate?(max(textRect.height - yMax, 0))
-                    self.delegate?.SSWCurrentSelectedLineDescent_iOSCoordinate?(textRect.height - yMin)
+                    idxInLine = line
+                    idxLineHeight = yMax - yMin
+                    idxLineOriginPoint = CGPointMake(lineOrigin.x, textRect.size.height - yMax + textRect.origin.y)
+                    self.delegate?.SSWCurrentSelectLineAscent_CTCoordinate?(yMax)
+                    self.delegate?.SSWCurrentSelectLineDescent_CTCoordinate?(yMin)
+                    self.delegate?.SSWCurrentSelectLineAscent_iOSCoordinate?(max(textRect.height - yMax, 0))
+                    self.delegate?.SSWCurrentSelectLineDescent_iOSCoordinate?(textRect.height - yMin)
                     break
                 }
             }
         }
-        return idx
+        
+        return (idx,idxInLine,idxLineHeight,idxLineOriginPoint)
     }
     
-    func stringAtPoint(point:CGPoint) ->String?{
+    func string_stringRectAtPoint(point:CGPoint) -> (String,CGRect)?{
         
-        guard var cfIndex = characterIndexAtPoint(point) else{
+        guard let (cfIndex0,cfLine,cfLineHeight,cfLineOrigin) = characterIndexAtPoint(point) else{
             return nil
         }
         
-        print(cfIndex)
-        
-        cfIndex = Int(cfIndex)
+        let cfIndex = Int(cfIndex0)
         let textString:NSString = self.text! as NSString;
         
         let stringLength = Int(textString.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
@@ -129,13 +134,17 @@ class SSWLabel: UILabel {
             endRange.location = stringLength
         }
         
+        let startOffset = CTLineGetOffsetForStringIndex(cfLine, frontRange.location , nil)
+        let endOffset = CTLineGetOffsetForStringIndex(cfLine, endRange.location , nil)
+        let stringRect = CGRectMake( CGRectGetMinX(self.frame) + cfLineOrigin.x + startOffset , CGRectGetMinY(self.frame) + cfLineOrigin.y , endOffset - startOffset, cfLineHeight)
+        
         var wordRange = NSMakeRange(frontRange.location, endRange.location - frontRange.location)
         
         if frontRange.location != 0{
             wordRange.location += 1
             wordRange.length -= 1
         }
-        return textString.substringWithRange(wordRange)
+        return (textString.substringWithRange(wordRange),stringRect)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -167,14 +176,21 @@ class SSWLabel: UILabel {
     }
     
     func touchFuncValidDelegate(touches: Set<UITouch>?, withEvent event: UIEvent?) -> Bool{
-        let litterIndex = self.characterIndexAtPoint(touchPoint(touches, baseView: self))
-        let string = self.stringAtPoint(touchPoint(touches, baseView: self))
+        let litterIndexLine = self.characterIndexAtPoint(touchPoint(touches, baseView: self))
+        let string = self.string_stringRectAtPoint(touchPoint(touches, baseView: self))?.0
+        let stringRect = self.string_stringRectAtPoint(touchPoint(touches, baseView: self))?.1
         if self.delegate != nil{
-            if litterIndex != nil{
-                self.delegate!.SSWCurrentSelectedLitterIndex?(litterIndex!)
+            if litterIndexLine != nil{
+                self.delegate!.SSWCurrentSelectLitterIndex?(litterIndexLine!.0)
             }
             if string != nil{
-                self.delegate!.SSWCurrentSelectedString?(string!)
+                self.delegate!.SSWCurrentSelectString?(string!)
+            }
+            if stringRect != nil{
+                delegate?.SSWCurrentSelectWordRect?(NSValue(CGRect: stringRect!), wordCenter: NSValue(CGPoint: stringRect!.center))
+                let topCenter = CGPointMake(stringRect!.center.x, CGRectGetMidY(stringRect!))
+                let bottomCenter = CGPointMake(stringRect!.center.x, CGRectGetMaxY(stringRect!))
+                delegate?.SSWCurrentSelectWordTopCenter?(NSValue(CGPoint: topCenter), BottomCenter: NSValue(CGPoint: bottomCenter))
             }
             return true
         }else{
